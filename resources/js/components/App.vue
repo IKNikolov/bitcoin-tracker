@@ -12,8 +12,7 @@
         </v-row>
         <v-row>
             <v-col>
-                form
-                <v-text-field label="Label"></v-text-field>
+                <PriceNotificationSubscriptionForm />
             </v-col>
         </v-row>
     </v-container>
@@ -21,11 +20,13 @@
 
 <script>
 import BitcoinPriceChart from './BitcoinPriceChart.vue';
+import PriceNotificationSubscriptionForm from './PriceNotificationSubscriptionForm.vue';
 
 export default {
     name: 'Layout',
     components: {
-        BitcoinPriceChart
+        BitcoinPriceChart,
+        PriceNotificationSubscriptionForm
     }
 }
 </script>
