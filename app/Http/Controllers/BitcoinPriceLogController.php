@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\BitcoinPriceLog;
 use Illuminate\Http\Request;
 use App\Http\Resources\BitcoinPriceLogResource;
+use App\Services\BitfinexService;
 
 class BitcoinPriceLogController extends Controller
 {
+    private $BitfinexService;
+
+    function __construct()
+    {
+        $this->BitfinexService = new BitfinexService();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +22,7 @@ class BitcoinPriceLogController extends Controller
      */
     public function index()
     {
-        return BitcoinPriceLogResource::collection(BitcoinPriceLog::all());
+        
+        return response()->json($this->BitfinexService->getDataForChart());
     }
 }

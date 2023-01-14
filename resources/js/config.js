@@ -1,0 +1,1 @@
+export const API_BASE_URL = 'http://bitcoin-tracker.dev.sonicomit.com/api';

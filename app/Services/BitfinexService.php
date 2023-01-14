@@ -36,4 +36,25 @@ class BitfinexService {
             $this->saveBitcoinPrice($data['volume'], $data['timestamp']);
         }
     }
+
+    public function getDataForChart(){
+        $bitcoinPriceLog = BitcoinPriceLog::orderBy('source_timestamp')->get();
+
+        $labels = $bitcoinPriceLog->pluck('source_timestamp')->transform(function($item, $key){
+            return $item->format('Y-m-d H:i:s');
+        });
+
+        $data = $bitcoinPriceLog->pluck('price');
+
+        return [
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Bitcoin price in USD',
+                    'backgroundColor' => '#f87979',
+                    'data' => $data
+                ]
+            ]
+        ];
+    }
 }
