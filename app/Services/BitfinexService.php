@@ -33,7 +33,7 @@ class BitfinexService {
         $data = $this->getBitcoinPrice();
 
         if ($data){
-            $this->saveBitcoinPrice($data['volume'], $data['timestamp']);
+            $this->saveBitcoinPrice($data['last_price'], $data['timestamp']);
         }
     }
 

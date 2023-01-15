@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BitcoinPriceLogController;
+use App\Http\Controllers\PriceSubscriptionNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,4 @@ use App\Http\Controllers\BitcoinPriceLogController;
 // });
 
 Route::get('/bitcoinPriceLog', [BitcoinPriceLogController::class, 'index']);
+Route::post('/priceSubscription', [PriceSubscriptionNotificationController::class, 'store']);

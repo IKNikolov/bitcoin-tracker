@@ -11,6 +11,24 @@
             <v-card-title>Subscribe to a price notification:</v-card-title>
 
             <v-card-text>
+                <v-row v-if="error">
+                    <v-col>
+                        <v-alert
+                            border="bottom"
+                            color="red"
+                            type="error"
+                        >{{ error }}</v-alert>
+                    </v-col>
+                </v-row>
+                <v-row v-if="success">
+                    <v-col>
+                        <v-alert
+                            border="bottom"
+                            color="green"
+                            type="success"
+                        >{{ success }}</v-alert>
+                    </v-col>
+                </v-row>
                 <v-row>
                     <v-col cols="6">
                         <v-text-field 
@@ -69,26 +87,46 @@ export default {
         priceRules: [
             v => !!v || 'Price is required',
             v => v > 0 && v < 10000000 || 'Price must be between 0 and 10 000 000',
-        ]
+        ],
+        error: false,
+        success: false
     }),
     methods: {
         async send () {
+            this.error = false
+            this.success = false
             this.valid = this.$refs.form.validate()
 
             console.log('valid', this.valid)
             if (this.valid) {
-                alert('Form is valid')
                 postPriceSubscription(this.email, this.price).then((response) => {
                     console.log(response.data)
+                    const data = response.data
+
+                    if (data.status == false){
+                        this.error = 'The request failed for an unknown reason. Please try again later.'
+                    } else {
+                        this.success = "You successfully subscribed for the price notification. Expect to be notified via email when the price of the Bitcoin is above your price limit."
+                    }
                 })
             }
         },
         reset () {
+            this.error = false
+            this.success = false
             this.$refs.form.reset()
         },
         resetValidation () {
+            this.error = false
+            this.success = false
             this.$refs.form.resetValidation()
-        },    
+        },
+        resetForm () {
+            this.email = ""
+            this.price = ""
+            this.reset()
+            this.resetValidation()
+        }
     }
 }
 </script>

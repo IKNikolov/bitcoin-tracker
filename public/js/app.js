@@ -5413,7 +5413,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       price: null,
       priceRules: [function (v) {
         return !!v || 'Price is required';
-      }]
+      }, function (v) {
+        return v > 0 && v < 10000000 || 'Price must be between 0 and 10 000 000';
+      }],
+      error: false,
+      success: false
     };
   },
   methods: {
@@ -5423,15 +5427,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
+              _this.error = false;
+              _this.success = false;
               _this.valid = _this.$refs.form.validate();
               console.log('valid', _this.valid);
               if (_this.valid) {
-                alert('Form is valid');
                 (0,_api_priceSubscription__WEBPACK_IMPORTED_MODULE_0__.postPriceSubscription)(_this.email, _this.price).then(function (response) {
                   console.log(response.data);
+                  var data = response.data;
+                  if (data.status == false) {
+                    _this.error = 'The request failed for an unknown reason. Please try again later.';
+                  } else {
+                    _this.success = "You successfully subscribed for the price notification. Expect to be notified via email when the price of the Bitcoin is above your price limit.";
+                  }
                 });
               }
-            case 3:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -5439,10 +5450,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     reset: function reset() {
+      this.error = false;
+      this.success = false;
       this.$refs.form.reset();
     },
     resetValidation: function resetValidation() {
+      this.error = false;
+      this.success = false;
       this.$refs.form.resetValidation();
+    },
+    resetForm: function resetForm() {
+      this.email = "";
+      this.price = "";
+      this.reset();
+      this.resetValidation();
     }
   }
 });
@@ -5533,7 +5554,19 @@ var render = function render() {
     attrs: {
       variant: "outlined"
     }
-  }, [_c("v-card-title", [_vm._v("Subscribe to a price notification:")]), _vm._v(" "), _c("v-card-text", [_c("v-row", [_c("v-col", {
+  }, [_c("v-card-title", [_vm._v("Subscribe to a price notification:")]), _vm._v(" "), _c("v-card-text", [_vm.error ? _c("v-row", [_c("v-col", [_c("v-alert", {
+    attrs: {
+      border: "bottom",
+      color: "red",
+      type: "error"
+    }
+  }, [_vm._v(_vm._s(_vm.error))])], 1)], 1) : _vm._e(), _vm._v(" "), _vm.success ? _c("v-row", [_c("v-col", [_c("v-alert", {
+    attrs: {
+      border: "bottom",
+      color: "green",
+      type: "success"
+    }
+  }, [_vm._v(_vm._s(_vm.success))])], 1)], 1) : _vm._e(), _vm._v(" "), _c("v-row", [_c("v-col", {
     attrs: {
       cols: "6"
     }
