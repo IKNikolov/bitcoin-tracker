@@ -67,7 +67,8 @@ export default {
         ],
         price: null,
         priceRules: [
-            v => !!v || 'Price is required'
+            v => !!v || 'Price is required',
+            v => v > 0 && v < 10000000 || 'Price must be between 0 and 10 000 000',
         ]
     }),
     methods: {
