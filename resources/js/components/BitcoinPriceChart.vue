@@ -23,11 +23,22 @@ export default {
     async mounted() {
         this.loaded= false
 
-        getBitcoinPriceLogs().then((response) => {
-            console.log(response.data)
-            this.chartData = response.data
-            this.loaded = true
-        })
+        this.loadChartData()
+        this.startLiveDataReload()
+    },
+    methods: {
+        loadChartData (){
+            getBitcoinPriceLogs().then((response) => {
+                console.log(response.data)
+                this.chartData = response.data
+                this.loaded = true
+            })
+        },
+        startLiveDataReload(){
+            setInterval(() => {
+                this.loadChartData()
+            }, 10000)
+        }
     }
 } 
 

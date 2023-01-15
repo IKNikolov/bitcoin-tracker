@@ -5366,17 +5366,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _this.loaded = false;
-            (0,_api_bitcoinPriceLog__WEBPACK_IMPORTED_MODULE_1__.getBitcoinPriceLogs)().then(function (response) {
-              console.log(response.data);
-              _this.chartData = response.data;
-              _this.loaded = true;
-            });
-          case 2:
+            _this.loadChartData();
+            _this.startLiveDataReload();
+          case 3:
           case "end":
             return _context.stop();
         }
       }, _callee);
     }))();
+  },
+  methods: {
+    loadChartData: function loadChartData() {
+      var _this2 = this;
+      (0,_api_bitcoinPriceLog__WEBPACK_IMPORTED_MODULE_1__.getBitcoinPriceLogs)().then(function (response) {
+        console.log(response.data);
+        _this2.chartData = response.data;
+        _this2.loaded = true;
+      });
+    },
+    startLiveDataReload: function startLiveDataReload() {
+      var _this3 = this;
+      setInterval(function () {
+        _this3.loadChartData();
+      }, 10000);
+    }
   }
 });
 
