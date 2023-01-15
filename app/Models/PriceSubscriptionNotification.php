@@ -10,4 +10,10 @@ class PriceSubscriptionNotification extends Model
     use HasFactory;
 
     protected $fillable = ['price', 'email'];
+
+    public static function setIsAboveSubscriptionWithPriceBelowLimit($price){
+        self::where('price', '>', $price)
+            ->where('is_above', true)
+            ->update(['is_above' => false]);
+    }
 }

@@ -10,12 +10,14 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 use App\Services\BitfinexService;
+use App\Services\PriceSubscriptionNotificationService;
 
-class GetBitcoinPriceFromBitfinexJob implements ShouldQueue
+class GetBitcoinPriceAndSendNotificationsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $BitfinexService;
+    protected $PriceSubscriptionNotificationService;
     /**
      * Create a new job instance.
      *
@@ -24,6 +26,7 @@ class GetBitcoinPriceFromBitfinexJob implements ShouldQueue
     public function __construct()
     {
         $this->BitfinexService = new BitfinexService();
+        $this->PriceSubscriptionNotificationService = new PriceSubscriptionNotificationService();
     }
 
     /**
@@ -33,6 +36,10 @@ class GetBitcoinPriceFromBitfinexJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->BitfinexService->getAndSaveBitcoinPrice();
+        $lastBitcoinPrice = $this->BitfinexService->getAndSaveBitcoinPrice();
+
+        if ($lastBitcoinPrice !== false){
+            $this->PriceSubscriptionNotificationService->sendNotificationWhenPriceIsAboveTheLimit($lastBitcoinPrice);
+        }
     }
 }

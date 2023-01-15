@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostPriceSubscriptionNotificationRequest;
 use App\Services\PriceSubscriptionNotificationService;
 
+use App\Jobs\GetBitcoinPriceAndSendNotificationsJob;
+
 class PriceSubscriptionNotificationController extends Controller
 {
     private $PriceSubscriptionNotificationService;

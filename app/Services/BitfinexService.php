@@ -34,7 +34,11 @@ class BitfinexService {
 
         if ($data){
             $this->saveBitcoinPrice($data['last_price'], $data['timestamp']);
+
+            return $data['last_price'];
         }
+
+         return false;
     }
 
     public function getDataForChart(){

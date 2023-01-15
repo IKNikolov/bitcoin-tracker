@@ -17,7 +17,7 @@ class CreatePriceSubscriptionNotificationsTable extends Migration
             $table->id();
             $table->string('email')->index();
             $table->double('price', 15, 7)->index();
-            $table->boolean('is_below')->index();
+            $table->boolean('is_above')->default(false)->index();
             $table->timestamps();
         });
     }
