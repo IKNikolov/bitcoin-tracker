@@ -5778,7 +5778,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "API_BASE_URL": () => (/* binding */ API_BASE_URL)
 /* harmony export */ });
-var API_BASE_URL = 'http://bitcoin-tracker.dev.sonicomit.com/api';
+var API_BASE_URL = 'https://bitcoin-tracker.dev.sonicomit.com/api';
 
 /***/ }),
 
