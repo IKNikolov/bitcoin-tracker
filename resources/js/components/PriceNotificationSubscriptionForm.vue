@@ -107,18 +107,17 @@ export default {
                         this.error = 'The request failed for an unknown reason. Please try again later.'
                     } else {
                         this.success = "You successfully subscribed for the price notification. Expect to be notified via email when the price of the Bitcoin is above your price limit."
+                        this.resetForm()
                     }
                 })
             }
         },
         reset () {
             this.error = false
-            this.success = false
             this.$refs.form.reset()
         },
         resetValidation () {
             this.error = false
-            this.success = false
             this.$refs.form.resetValidation()
         },
         resetForm () {

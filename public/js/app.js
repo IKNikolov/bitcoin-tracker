@@ -5439,6 +5439,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.error = 'The request failed for an unknown reason. Please try again later.';
                   } else {
                     _this.success = "You successfully subscribed for the price notification. Expect to be notified via email when the price of the Bitcoin is above your price limit.";
+                    _this.resetForm();
                   }
                 });
               }
@@ -5451,12 +5452,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     reset: function reset() {
       this.error = false;
-      this.success = false;
       this.$refs.form.reset();
     },
     resetValidation: function resetValidation() {
       this.error = false;
-      this.success = false;
       this.$refs.form.resetValidation();
     },
     resetForm: function resetForm() {
